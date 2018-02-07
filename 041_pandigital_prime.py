@@ -8,17 +8,8 @@ import time
 
 def main():
 
-    # one million
-    # 78498
-    # time: 0.7800731658935547 new 0.6487257480621338
-    # ten million
-    # 664579
-    # time: 8.014394760131836
-    primes = all_primes(10000000)
-    print(primes)
-    print(len(primes))
-
-    pass
+    primes = all_primes(100000000)
+    print('finish')
 
 
 def all_primes(limit):
@@ -49,13 +40,3 @@ if __name__ == '__main__':
     start_time = time.time()
     main()
     print("time:", time.time() - start_time)
-
-
-def read_file(filename):
-    data_file = open(filename)
-    data_set = []
-    for line in data_file.readlines():
-        data_set.append(line.strip())
-    return data_set
-
-
