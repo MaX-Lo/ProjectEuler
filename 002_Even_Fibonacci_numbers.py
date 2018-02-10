@@ -6,6 +6,7 @@ the first 10 terms will be:
 By considering the terms in the Fibonacci sequence whose values do not exceed four million, find the sum of the
 even-valued terms.
 """
+import time
 
 
 def main():
@@ -21,4 +22,6 @@ def fibonacci(n1, n2, limit):
 
 
 if __name__ == '__main__':
+    start_time = time.time()
     main()
+    print("time:", time.time()-start_time)
