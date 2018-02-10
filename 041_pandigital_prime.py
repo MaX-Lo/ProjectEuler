@@ -1,39 +1,59 @@
 """
 idea:
 
-
+largest pandigital number is 987.654.321
 """
 import time
+import primesieve
 
 
 def main():
 
-    primes = all_primes(100000000)
-    print('finish')
+    largest = -1
+    for i in range(9, 1, -1):
+        print("progress", i)
+        i_largest = largest_pandigital(i)
+        if i_largest > largest:
+            largest = i_largest
+
+    print("largest:", largest)
 
 
-def all_primes(limit):
-    # list containing for every number whether it has been marked already
-    numbers = {}
-    for x in range(3, limit, 2):
-        numbers[x] = False
+def largest_pandigital(length):
+    """
+    :param length: length of number e.g 12345 has length 5
+    """
 
-    primes = [2, 3]
+    largest = -1
 
-    p = 3
-    while p < limit:
-        for i in range(p, limit, p):
-            numbers[i] = True
+    it = primesieve.Iterator()
+    it.skipto(10**(length-1))
+    prime = it.next_prime()
 
-        for i in range(p, limit, 2):
-            if not numbers[i]:
-                p = i
-                numbers[i] = True
-                primes.append(i)
-                break
-            else:
-                p += 1
-    return primes
+    num = '987654321'
+    max_num = int(num[9 - length:])
+    i = 0
+    while prime < max_num:
+        i += 1
+        if i % 1000000 == 0:
+            print(prime)
+
+        prime_str = str(prime)
+        if len(set(prime_str)) == len(prime_str) and is_pandigital(prime_str):
+
+            if prime > largest:
+                largest = prime
+        prime = it.next_prime()
+
+    print("largest:", largest if largest != -1 else "none found!")
+    return largest
+
+
+def is_pandigital(num_str):
+    for i in '123456789'[:len(num_str)]:
+        if i not in num_str:
+            return False
+    return True
 
 
 if __name__ == '__main__':

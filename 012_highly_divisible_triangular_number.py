@@ -33,6 +33,7 @@ def main():
     triangle_number = 1
     n = 2
     while get_num_of_divisors(triangle_number, primes) <= 500:
+        print(triangle_number)
         triangle_number += n
         n += 1
 
@@ -45,6 +46,7 @@ def get_num_of_divisors(n, primes):
     num_of_divisors = 1
     for value in factorization(n, primes).values():
         num_of_divisors *= (value + 1)
+    print("ammount of divisors: ", num_of_divisors)
     return num_of_divisors
 
 
