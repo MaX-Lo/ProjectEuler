@@ -12,13 +12,14 @@ use factorization after Fermat
 
 import math
 
+import time
+
 
 def main():
     print(get_factors(600851475143))
 
 
 def get_factors(n):
-    print(n)
     if n == 10 or n == 5:
         return 5
     if n == 9 or n == 6 or n == 3:
@@ -28,11 +29,10 @@ def get_factors(n):
 
     x = math.ceil(math.sqrt(n))
     r = x * x - n
-    print("x", x, "r", r)
     while not math.sqrt(r).is_integer():
         r = math.floor(r) + 2 * x + 1
         x = x + 1
-    print("zes")
+
     y = math.sqrt(r)
     a = x + y
     b = x - y
@@ -48,4 +48,6 @@ def get_factors(n):
 
 
 if __name__ == '__main__':
+    start_time = time.time()
     main()
+    print(time.time() - start_time)

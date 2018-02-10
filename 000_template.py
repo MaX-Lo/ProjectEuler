@@ -1,5 +1,5 @@
 """
-Task:
+idea:
 
 
 """
@@ -24,25 +24,14 @@ def read_file(filename):
     return data_set
 
 
-def all_primes(limit):
-    # list containing for every number whether it has been marked already
-    numbers = {}
-    for x in range(3, limit, 2):
-        numbers[x] = False
+def read_txt_file(filename):
+    data_file = open(filename)
+    data_set = []
+    for line in data_file.readlines():
+        data_set.append(line.strip().split("\",\""))
 
-    primes = [2, 3]
+    data_set = data_set[0]
+    data_set[0] = data_set[0][1:]
+    data_set[-1] = data_set[-1][:-1]
+    return data_set
 
-    p = 3
-    while p < limit:
-        for i in range(p, limit, p):
-            numbers[i] = True
-
-        for i in range(p, limit, 2):
-            if not numbers[i]:
-                p = i
-                numbers[i] = True
-                primes.append(i)
-                break
-            else:
-                p += 1
-    return primes
