@@ -5,9 +5,11 @@ Task:
 """
 import time
 
+import primesieve as primesieve
+
 
 def main():
-    primes = set(all_primes(1000000))
+    primes = set(primesieve.primes(1000000))
 
     wanted_nums = set()
 

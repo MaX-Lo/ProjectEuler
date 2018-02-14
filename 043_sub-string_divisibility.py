@@ -7,7 +7,10 @@ import time
 
 
 def main():
+    t = time.time()
     pandigitals = get_pandigital_numbers()
+    print("time for generating pandigitals", time.time() - t)
+
     len_pandigitals = len(pandigitals)
     i = 0
     print("num of pandigital nums:", len_pandigitals)
