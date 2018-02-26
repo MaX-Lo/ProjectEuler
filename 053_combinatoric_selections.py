@@ -1,6 +1,7 @@
 """
 idea:
-levensthein distance?
+
+
 """
 import time
 

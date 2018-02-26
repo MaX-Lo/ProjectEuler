@@ -5,8 +5,6 @@ idea:
 """
 import time
 
-import math
-
 
 def main():
     num = 28433*powermod(2, 7830457, 10000000000)+1
