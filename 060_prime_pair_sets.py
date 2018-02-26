@@ -1,5 +1,8 @@
 """
 idea:
+
+alle permutationen testen
+
 """
 import time
 

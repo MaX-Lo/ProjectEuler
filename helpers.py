@@ -1,3 +1,10 @@
+import math
+
+
+def num_of_digits(num):
+    return int(math.floor(math.log10(num))+1)
+
+
 def factorization(n, primes):
     """
     :param n: number to factorize
