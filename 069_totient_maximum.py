@@ -1,14 +1,73 @@
 """
 Task:
 
-
+https://www.wikiwand.com/de/Eulersche_Phi-Funktion#/Allgemeine_Berechnungsformel
 """
 import time
-
 import math
+
+import primesieve
 
 
 def main():
+    new_variant()
+
+
+def new_variant():
+    start_time = time.time()
+
+    n_range = 1000000
+    primes = primesieve.primes(1000000)
+    max_fraction = 0
+    n_max_fraction = 0
+    for n in range(2, n_range):
+        if n % 10000 == 0:
+            print(n / 10000, '%')
+        factors = factorization(n, primes)
+        phi = get_phi(factors)
+        fraction = n / phi
+        if fraction > max_fraction:
+            max_fraction = fraction
+            n_max_fraction = n
+            print('n', n, 'fraction', fraction)
+
+    print('searched n:', n_max_fraction)
+    print("time:", time.time() - start_time)
+
+
+def get_phi(factors):
+    phi = 1
+    for factor in factors:
+        phi *= factor**(factors[factor]-1) * (factor-1)
+    return phi
+
+
+def factorization(n, primes):
+    """
+    :param n: number to factorize
+    :param primes: list with primes
+    :return: dictionary with primes that occur (and count of them)
+    """
+    factors = {}
+
+    # in case n itself is a prime
+    if n in primes:
+        factors[n] = 1
+        return factors
+
+    while n != 1:
+        for prime in primes:
+            if n % prime == 0:
+                n /= prime
+                if prime in factors:
+                    factors[prime] += 1
+                else:
+                    factors[prime] = 1
+                break
+    return factors
+
+
+def old_variant():
     start_time = time.time()
 
     limit = 20
@@ -29,7 +88,6 @@ def main():
 
     print("time:", time.time() - start_time)
 
-
 def get_2factors(n):
     if n % 2 == 0:
         return int(n/2), 2
@@ -44,9 +102,6 @@ def get_2factors(n):
     a = a + y
 
     return int(a), int(n / a)
-
-def is_square():
-    pass
 
 
 # get a list of all factors for N
