@@ -9,12 +9,12 @@ import time
 def main():
     start_time = time.time()
 
-    size = 14
+    size = 5
     # print("fast version: ", go2(size, size))
     # print("time:", time.time() - start_time)
     table = create_table(21, 21)
 
-    print(table[20, 20])
+    print(table[size, size])
     print("time:", time.time() - start_time)
 
 

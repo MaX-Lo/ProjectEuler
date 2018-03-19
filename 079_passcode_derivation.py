@@ -1,6 +1,5 @@
 """
 idea:
-levensthein distance?
 
 kein Versuch hat die 7 nicht an 1. Stelle
 die 3 kommt entweder an 1. Stelle oder nach der 7
@@ -11,5 +10,4 @@ es gibt keine 5
 die 2 kommt immer vor 8, 9 und 0
 es gibt keine 4
 
-73162890
 """

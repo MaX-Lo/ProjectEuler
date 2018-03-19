@@ -2,9 +2,7 @@
 idea:
 """
 import time
-
 import math
-
 import sys
 
 
