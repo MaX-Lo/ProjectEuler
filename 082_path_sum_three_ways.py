@@ -11,21 +11,25 @@ def main():
 
     for x in range(len(data[0]) - 2, -1, -1):
         tmp_data = copy.deepcopy(data)
-        for y in range(len(data)):
-            if y == 0:
-                tmp_data[y][x] += min(data[y][x+1], data[y+1][x]+data[y+1][x+1])
-            elif y == len(data)-1:
-                tmp_data[y][x] += min(data[y-1][x]+data[y-1][x+1], data[y][x+1])
-            elif y == 1:
-                tmp_data[y][x] += min(data[y-1][x]+data[y-1][x+1], data[y][x+1], data[y+1][x]+data[y+1][x+1], data[y+1][x]+data[y+2][x]+data[y+2][x+1])
-            elif y == len(data)-2:
-                tmp_data[y][x] += min(data[y-1][x]+data[y-1][x+1], data[y-1][x]+data[y-2][x]+data[y-2][x+1], data[y][x+1], data[y+1][x]+data[y+1][x+1])
-            else:
-                tmp_data[y][x] += min(data[y-1][x]+data[y-1][x+1], data[y-1][x]+data[y-2][x]+data[y-2][x+1], data[y][x+1], data[y+1][x]+data[y+1][x+1], data[y+1][x]+data[y+2][x]+data[y+2][x+1])
+        for y in range(len(data)): # for every number in the current row
+            min_sum = 1000000000000000000000000000
+            for i in range(0, y+1): # check all nums above current num and the one right of it
+                tmp_sum = data[i][x+1]
+                for j in range(i, y+1):
+                    tmp_sum += data[j][x]
+                if tmp_sum < min_sum:
+                    min_sum = tmp_sum
+            for i in range(len(data)-1, y, -1): # check all nums under it
+                tmp_sum = data[i][x + 1]
+                for j in range(i, y-1, -1):
+                    tmp_sum += data[j][x]
+                if tmp_sum < min_sum:
+                    min_sum = tmp_sum
+            tmp_data[y][x] = min_sum
 
         data = copy.deepcopy(tmp_data)
 
-    print_matrix(tmp_data)
+    print_matrix(data)
     first_row = []
     for line in data:
         first_row.append(line[0])
