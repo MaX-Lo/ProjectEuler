@@ -5,50 +5,60 @@ import time
 
 
 def main():
-    data = read_file('083_matrix_example.txt')
+    data = read_file('083_matrix.txt')
+    shortest_path(data)
 
 
-def dijkstra(knoten, kanten, start, ziel):
-    # knoten ist eine Liste von Knoten
-    # kanten ist eine Liste von 3-Tupeln:
-    #   (knoten1, knoten2, kosten)
-    # start ist der Knoten, in dem die Suche startet
-    # ziel ist der Knoten, zu dem ein Weg gesucht werden soll
-    # Gibt ein Tupel zurück mit dem Weg und den Kosten
-    #
-    knotenEigenschaften = [[i, "inf", None, False] for i in knoten if i != start]
-    knotenEigenschaften += [[start, 0, None, False]]
-    for i in range(len(knotenEigenschaften)):
-        knotenEigenschaften[i] += [i]
+def shortest_path(matrix):
+    # All nodes where one way to get there is unknown
+    nodes = dict()
+    unknown_nodes = dict()
+    for y in range(len(matrix)):
+        for x in range(len(matrix[0])):
+            # a nodes structure is: (x, y) = (weight_to_this_node, distance, visited)
+            unknown_nodes[(x, y)] = matrix[y][x]
+            nodes[(x, y)] = matrix[y][x]
 
-    while True:
-        unbesuchteKnoten = filter(lambda x: not x[3], knotenEigenschaften)
-        if not unbesuchteKnoten: break
-        sortierteListe = sorted(unbesuchteKnoten, key=lambda i: i[1])
-        aktiverKnoten = sortierteListe[0]
-        knotenEigenschaften[aktiverKnoten[4]][3] = True
-        if aktiverKnoten[0] == ziel:
-            break
-        aktiveKanten = filter(lambda x: x[0] == aktiverKnoten[0], kanten)
-        for kante in aktiveKanten:
-            andererKnotenId = filter(lambda x: x[0] == kante[1], knotenEigenschaften)[0][4]
-            gewichtSumme = aktiverKnoten[1] + kante[2]
-            if gewichtSumme < knotenEigenschaften[andererKnotenId][1]:
-                knotenEigenschaften[andererKnotenId][1] = gewichtSumme
-                knotenEigenschaften[andererKnotenId][2] = aktiverKnoten[4]
+    start_node = (0, 0), unknown_nodes[(0, 0)]
+    unknown_nodes.pop((0, 0))
+    # All nodes where one way to get there is known
+    unvisited_nodes = dict()
+    unvisited_nodes[start_node[0]] = start_node[1]
 
-    if aktiverKnoten[0] == ziel:
-        weg = []
-        weg += [aktiverKnoten[0]]
-        kosten = 0
-        while aktiverKnoten[0] != start:
-            aktiverKnoten = knotenEigenschaften[aktiverKnoten[2]]
-            weg += [aktiverKnoten[0]]
-            kosten += aktiverKnoten[1]
-        weg.reverse()
-        return (weg, kosten)
-    else:
-        print("Kein Weg gefunden")
+    visited = dict()
+
+    while len(unvisited_nodes) != 0:
+        curr = get_next(unvisited_nodes)
+        distance = unvisited_nodes[curr]
+        unvisited_nodes.pop(curr)
+        #print(curr, distance)
+        visited[curr] = distance
+
+        cx, cy = curr
+        for candidate in [(cx+1, cy), (cx-1, cy), (cx, cy+1), (cx, cy-1)]:
+            # update unvisited nodes
+            if candidate in unvisited_nodes:
+                maybe_shorter_distance = distance + nodes[candidate]
+                if maybe_shorter_distance < unvisited_nodes[candidate]:
+                    unvisited_nodes[candidate] = maybe_shorter_distance
+            # add former unknown nodes to unvisited nodes
+            if candidate in unknown_nodes:
+                unvisited_nodes[candidate] = distance + unknown_nodes[candidate]
+                unknown_nodes.pop(candidate)
+
+    print(visited)
+    x, y = len(matrix)-1, len(matrix[0])-1
+    print('shortes:', visited[(x, y)])
+
+
+def get_next(nodes):
+    min_distance = 100000000
+    n = -1, -1
+    for node in nodes:
+        if nodes[node] < min_distance:
+            n = node
+            min_distance = nodes[node]
+    return n
 
 
 def print_matrix(matrix):
