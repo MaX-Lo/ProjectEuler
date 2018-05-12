@@ -2,7 +2,6 @@
 idea:
 """
 import time
-from sympy.ntheory import factorint
 import math
 import primesieve
 
@@ -30,7 +29,7 @@ def main():
     res = 0
     time0 = time.time()
     for i in range(2, limit+1):
-        if i % 1000000 == 0:
+        if i % 100000 == 0:
             print('prog', i, round(time.time() - time0, 2), 'sec')
 
         if i in primes_s:
@@ -42,8 +41,8 @@ def main():
 
 
 def s(n, primes, cache):
-    factors = factorint(n)
-    #factors = factorization(n, primes)
+    #factors = factorint(n)
+    factors = factorization(n, primes)
     return max([cache[(factor, factors[factor])] for factor in factors])
 
 

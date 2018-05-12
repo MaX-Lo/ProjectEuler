@@ -2,7 +2,6 @@
 idea:
 """
 import time
-
 import primesieve
 
 
@@ -109,7 +108,7 @@ def old_approach():
     max_layer = layer - 1
     solutions = [1]
     x, y = 0, -1
-    for layer in range(1, max_layer): # outermost layer can't get testet
+    for layer in range(1, max_layer):  # outermost layer can't get testet
         for _ in range(layer):
             c = count_prime_diff_neighbours(x, y, tiles, primes)
             if c == 3:
